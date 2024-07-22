@@ -15,9 +15,8 @@ public class Main{
         f.setLocationRelativeTo(null);
         f.setResizable(false);
         
-        SnakeGame game = new SnakeGame(SCREEN_WIDTH, SCREEN_HEIGHT, SIZE);
-        f.add(game);
-    
+        f.add(new SnakeGame(SCREEN_WIDTH, SCREEN_HEIGHT, SIZE));
+
         f.setVisible(true);
     }
 }

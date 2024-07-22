@@ -35,12 +35,14 @@ public class SnakeGame extends JPanel{
         private int x;
         private int y;
 
+        int eve;
+        
         Random rand = new Random();
-
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+            reset();
             if(running){
                 update();
                 foodGen();
@@ -57,6 +59,7 @@ public class SnakeGame extends JPanel{
             public void keyTyped(KeyEvent e){}
             @Override
             public void keyPressed(KeyEvent e) {
+                eve = e.getKeyCode();
                 switch (e.getKeyChar()) {
                     case 'w':if(lastChar != 's'){lastChar = 'w';}break;
                     case 's':if(lastChar != 'w'){lastChar = 's';}break;
@@ -140,6 +143,15 @@ public class SnakeGame extends JPanel{
         running = false;
     }
 
+    private void reset(){
+        if(eve == 10){
+            snakeLenght = 3;
+            snakeX[0] = SIZE;
+            snakeY[0] = SIZE;
+            running = true;
+        }
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         draw(g);
@@ -162,6 +174,6 @@ public class SnakeGame extends JPanel{
             Font currentFont = g.getFont();
             Font newFont = currentFont.deriveFont(currentFont.getSize() * 4.4F);
             g.setFont(newFont);
-            g.setColor(COLOR[4]);g.drawString("GAME OVER", WIDTH*SIZE / 3, HEIGHT*SIZE / 2);}
+            g.setColor(COLOR[4]);g.drawString("GAME OVER (enter to reset)", WIDTH*SIZE / 15, HEIGHT*SIZE / 2);}
     }
 }
