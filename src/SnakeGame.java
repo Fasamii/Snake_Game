@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Color;
 import javax.swing.JPanel;
+import java.util.Random;
 
 public class SnakeGame extends JPanel{
     
@@ -28,7 +29,11 @@ public class SnakeGame extends JPanel{
         private int snakeLenght = 3;
         private int foods_in_game = 0;
         private int[] foodX = new int[FOODS];
-        private int[] foodY = new int[FOODS];    
+        private int[] foodY = new int[FOODS];
+        private int x;
+        private int y;
+
+        Random rand = new Random();
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -81,12 +86,24 @@ public class SnakeGame extends JPanel{
 
     private void foodGen(){
         while(this.foods_in_game < this.FOODS){
-            System.out.println("new fo");
+            do{
+                x = rand.nextInt(WIDTH);
+                y = rand.nextInt(HEIGHT);
+            }while(isntAv(x,y));
+            foodX[foods_in_game] = x;
+            foodY[foods_in_game] = y;
             foods_in_game++;
         }
     }
 
-
+    private boolean isntAv(int x,int y){
+        for(int i = 0;i < foods_in_game;i++){
+            if(x == foodX[i] && y == foodY[i]){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
@@ -105,7 +122,9 @@ public class SnakeGame extends JPanel{
             g.fillRect(this.snakeX[i]+3,this.snakeY[i]+3,SIZE-5,SIZE-5);
         }
         //food
-        g.setColor(COLOR[3]);
-        g.fillRect(SIZE*4+4,SIZE*3+4,SIZE-7,SIZE-7);
+        for(int i = 0;i < foods_in_game;i++){
+            g.setColor(COLOR[3]);
+            g.fillRect(foodX[i]*SIZE+4,foodY[i]*SIZE+4,SIZE-7,SIZE-7);
+        }
     }
 }
