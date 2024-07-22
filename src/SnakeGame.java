@@ -12,12 +12,13 @@ public class SnakeGame extends JPanel {
             new Color(0x301045),
             new Color(0x00B050),
             new Color(0x008040),
-            new Color(0xA01080)
+            new Color(0xE050B0)
         };
 
         private boolean running = true;
         private int[] snakeX;
         private int[] snakeY;
+        private int snakeLenght = 1;
 
     SnakeGame(int WIDTH,int HEIGHT, int SIZE){
         this.WIDTH=WIDTH;this.HEIGHT=HEIGHT;this.SIZE=SIZE;
@@ -28,21 +29,29 @@ public class SnakeGame extends JPanel {
         this.snakeX[0] = SIZE;this.snakeY[0] = SIZE;
     }
 
+    private void update(){
+        for(int i = snakeX.length - 1;i > 0;i--){
+            snakeX[i] = snakeX[i-1];
+            snakeY[i] = snakeY[i-1];
+        }
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         draw(g);
     }
     public void draw(Graphics g){
-        for(int i = 0;i <= WIDTH;i++){
-            g.setColor(COLOR[1]);
-            g.drawLine(i*SIZE, 0, i*SIZE, HEIGHT*SIZE);
+        //grid
+        for(int i = 0;i <= WIDTH;i++){g.setColor(COLOR[1]);g.drawLine(i*SIZE, 0, i*SIZE, HEIGHT*SIZE);}
+        for(int i = 0;i <= HEIGHT;i++){g.setColor(COLOR[1]);g.drawLine(0, i*SIZE, WIDTH*SIZE,i*SIZE);}
+        //snake
+        for(int i = 0;i < snakeLenght;i++){
+            if(i == 0){g.setColor(COLOR[1]);}else{g.setColor(COLOR[2]);}    
+            g.fillRect(this.snakeX[i]+3,this.snakeY[i]+3,SIZE-5,SIZE-5);
         }
-        for(int i = 0;i <= HEIGHT;i++){
-            g.setColor(COLOR[1]);
-            g.drawLine(0, i*SIZE, WIDTH*SIZE,i*SIZE);
-        }
-        g.setColor(COLOR[1]);
-        g.fillRect(this.snakeX[0]+3,this.snakeY[0]+3,SIZE-5,SIZE-5);
+        //food
+        g.setColor(COLOR[3]);
+        g.fillRect(SIZE*4+10,SIZE*3+10,SIZE-19,SIZE-19);
     }
 
 }
