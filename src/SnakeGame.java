@@ -145,6 +145,7 @@ public class SnakeGame extends JPanel{
 
     private void reset(){
         if(eve == 10){
+            lastChar = 'd';
             snakeLenght = 3;
             snakeX[0] = SIZE;
             snakeY[0] = SIZE;
