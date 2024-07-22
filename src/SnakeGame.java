@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.util.Random;
+import java.awt.Font;
 
 public class SnakeGame extends JPanel{
     
@@ -19,7 +20,8 @@ public class SnakeGame extends JPanel{
             new Color(0x301045),
             new Color(0x00B050),
             new Color(0x308040),
-            new Color(0xFF60C0)
+            new Color(0xFF60C0),
+            new Color(0xFF0000)
         };
 
         private boolean running = true;
@@ -99,6 +101,11 @@ public class SnakeGame extends JPanel{
     }
 
     private boolean isntAv(int x,int y){
+        for(int i = 0;i < snakeLenght;i++){
+            if(snakeX[i] == x*SIZE && snakeY[i] == y*SIZE){
+                return true;
+            }
+        }
         for(int i = 0;i < foods_in_game;i++){
             if(x == foodX[i] && y == foodY[i]){
                 return true;
@@ -121,7 +128,17 @@ public class SnakeGame extends JPanel{
         }
     }
 
-    private void colisionCheck(){}
+    private void colisionCheck(){
+        if(snakeX[0] < 0 || snakeY[0] < 0){gameOver();}
+        if(snakeX[0] > WIDTH*SIZE || snakeY[0] > HEIGHT*SIZE){gameOver();}
+        for(int i = 1;i < snakeLenght;i++){
+            if(snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]){gameOver();}
+        }
+    }
+
+    private void gameOver(){
+        running = false;
+    }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -141,5 +158,10 @@ public class SnakeGame extends JPanel{
             g.setColor(COLOR[3]);
             g.fillRect(foodX[i]*SIZE+4,foodY[i]*SIZE+4,SIZE-7,SIZE-7);
         }
+        if(!running){
+            Font currentFont = g.getFont();
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * 4.4F);
+            g.setFont(newFont);
+            g.setColor(COLOR[4]);g.drawString("GAME OVER", WIDTH*SIZE / 3, HEIGHT*SIZE / 2);}
     }
 }
