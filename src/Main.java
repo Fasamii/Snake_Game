@@ -4,7 +4,7 @@ public class Main{
 
     private static int SCREEN_WIDTH = 15;
     private static int SCREEN_HEIGHT = 10;
-    private static int SIZE = 50; // min 10
+    private static int SIZE = 80; // min 10
 
     static JFrame f = new JFrame();
 

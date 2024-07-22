@@ -21,10 +21,12 @@ public class SnakeGame extends JPanel{
             new Color(0x00B050),
             new Color(0x308040),
             new Color(0xFF60C0),
-            new Color(0xFF0000)
+            new Color(0xFF0000),
+            new Color(0xECEE0F)
         };
 
         private boolean running = true;
+        private boolean win = false;
         private char lastChar = 'd';
         private int[] snakeX;
         private int[] snakeY;
@@ -137,6 +139,7 @@ public class SnakeGame extends JPanel{
         for(int i = 1;i < snakeLenght;i++){
             if(snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]){gameOver();}
         }
+        if(snakeLenght == HEIGHT * WIDTH){running = false; win = true;}
     }
 
     private void gameOver(){
@@ -171,10 +174,15 @@ public class SnakeGame extends JPanel{
             g.setColor(COLOR[3]);
             g.fillRect(foodX[i]*SIZE+4,foodY[i]*SIZE+4,SIZE-7,SIZE-7);
         }
-        if(!running){
+        if(!running && !win){
             Font currentFont = g.getFont();
-            Font newFont = currentFont.deriveFont(currentFont.getSize() * 4.4F);
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * (4.4F*(SIZE / 50)));
             g.setFont(newFont);
             g.setColor(COLOR[4]);g.drawString("GAME OVER (enter to reset)", WIDTH*SIZE / 15, HEIGHT*SIZE / 2);}
+        if(win){
+            Font currentFont = g.getFont();
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * (4.4F * (SIZE / 50)));
+            g.setFont(newFont);
+            g.setColor(COLOR[5]);g.drawString("WIN (enter to reset)", WIDTH*SIZE / 15, HEIGHT*SIZE / 2);}
     }
 }
