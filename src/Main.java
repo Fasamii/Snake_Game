@@ -6,9 +6,10 @@ public class Main{
     private static int SCREEN_HEIGHT = 15;
     private static int SIZE = 40;
 
+    static JFrame f = new JFrame();
+
     public static void main(String[] args) throws Exception{
         
-        JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize((SCREEN_WIDTH * SIZE)+5,(SCREEN_HEIGHT * SIZE)+32);
         f.setLocationRelativeTo(null);
@@ -18,5 +19,9 @@ public class Main{
 
         f.add(game);
         f.setVisible(true);
+    }
+
+    public static void rep(){
+        f.repaint();
     }
 }

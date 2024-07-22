@@ -1,24 +1,38 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.Color;
 import javax.swing.JPanel;
 
-public class SnakeGame extends JPanel {
+public class SnakeGame extends JPanel{
     
         private int WIDTH;
         private int HEIGHT;
         private int SIZE;
+        private int DELAY = 1000;
         private final Color[] COLOR = {
             new Color(0x301045),
             new Color(0x00B050),
-            new Color(0x008040),
+            new Color(0x308040),
             new Color(0xE050B0)
         };
 
         private boolean running = true;
+        private char lastChar = 'd';
         private int[] snakeX;
         private int[] snakeY;
-        private int snakeLenght = 1;
+        private int snakeLenght = 3;
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+        };
 
     SnakeGame(int WIDTH,int HEIGHT, int SIZE){
         this.WIDTH=WIDTH;this.HEIGHT=HEIGHT;this.SIZE=SIZE;
@@ -27,6 +41,7 @@ public class SnakeGame extends JPanel {
         snakeX= new int[WIDTH*HEIGHT];
         snakeY= new int[WIDTH*HEIGHT];
         this.snakeX[0] = SIZE;this.snakeY[0] = SIZE;
+        timer.scheduleAtFixedRate(task, 0, DELAY);
     }
 
     private void update(){
@@ -34,6 +49,14 @@ public class SnakeGame extends JPanel {
             snakeX[i] = snakeX[i-1];
             snakeY[i] = snakeY[i-1];
         }
+        switch (this.lastChar) {
+            case 'w':snakeY[0] = snakeY[0] - SIZE;break;
+            case 's':snakeY[0] = snakeY[0] + SIZE;break;
+            case 'a':snakeX[0] = snakeX[0] - SIZE;break;
+            case 'd':snakeX[0] = snakeX[0] + SIZE;break;
+            default:break;
+        }
+        Main.rep();
     }
 
     public void paintComponent(Graphics g){
@@ -54,4 +77,10 @@ public class SnakeGame extends JPanel {
         g.fillRect(SIZE*4+10,SIZE*3+10,SIZE-19,SIZE-19);
     }
 
+    class MyKeyAdapt extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e){
+
+        }
+    }
 }
