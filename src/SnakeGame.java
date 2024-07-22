@@ -3,6 +3,7 @@ import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,13 +34,12 @@ public class SnakeGame extends JLabel implements ActionListener {
     private char last_char = ' ';
     private int foods_spawned = 0;
 
-    private final JFrame f = new JFrame();
     private final Random rand = new Random();
     private Timer timer;
 
     SnakeGame(){
         this.setName(NAME);
-        this.setSize(SCREEN_WIDTH*SCALE,SCREEN_HEIGHT*SCALE);
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
         this.setLayout(null);
         this.setBackground(COLOR[0]);
         this.addKeyListener(new KeyAdapt());
@@ -66,7 +66,7 @@ public class SnakeGame extends JLabel implements ActionListener {
 
 // =-= Graphics =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
    
-    private void paint(Graphics g){
+    public void paint(Graphics g){
         
     }
 
