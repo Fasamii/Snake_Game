@@ -4,7 +4,7 @@ public class Main{
 
     private static int SCREEN_WIDTH = 20;
     private static int SCREEN_HEIGHT = 15;
-    private static int SIZE = 40;
+    private static int SIZE = 50; // min 10
 
     static JFrame f = new JFrame();
 
@@ -19,9 +19,5 @@ public class Main{
 
         f.add(game);
         f.setVisible(true);
-    }
-
-    public static void rep(){
-        f.repaint();
     }
 }
