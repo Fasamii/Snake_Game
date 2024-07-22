@@ -1,8 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Color;
-
-import javax.print.attribute.standard.Sides;
 import javax.swing.JPanel;
 
 public class SnakeGame extends JPanel {
@@ -23,7 +21,7 @@ public class SnakeGame extends JPanel {
 
     SnakeGame(int WIDTH,int HEIGHT, int SIZE){
         this.WIDTH=WIDTH;this.HEIGHT=HEIGHT;this.SIZE=SIZE;
-        this.setPreferredSize(new Dimension(this.WIDTH * this.SIZE,this.HEIGHT * this.SIZE));
+        this.setPreferredSize(new Dimension((this.WIDTH * this.SIZE)+5,(this.HEIGHT * this.SIZE)+32));
         this.setBackground(COLOR[0]);
         snakeX= new int[WIDTH*HEIGHT];
         snakeY= new int[WIDTH*HEIGHT];
@@ -35,8 +33,16 @@ public class SnakeGame extends JPanel {
         draw(g);
     }
     public void draw(Graphics g){
+        for(int i = 0;i <= WIDTH;i++){
+            g.setColor(COLOR[1]);
+            g.drawLine(i*SIZE, 0, i*SIZE, HEIGHT*SIZE);
+        }
+        for(int i = 0;i <= HEIGHT;i++){
+            g.setColor(COLOR[1]);
+            g.drawLine(0, i*SIZE, WIDTH*SIZE,i*SIZE);
+        }
         g.setColor(COLOR[1]);
-        g.fillRect(this.snakeX[0],this.snakeY[0],SIZE,SIZE);
+        g.fillRect(this.snakeX[0]+3,this.snakeY[0]+3,SIZE-5,SIZE-5);
     }
 
 }
