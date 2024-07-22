@@ -74,7 +74,7 @@ public class SnakeGame extends JPanel{
     }
 
     private void update(){
-        for(int i = snakeLenght - 1;i > 0;i--){
+        for(int i = snakeLenght;i > 0;i--){
             snakeX[i] = snakeX[i-1];
             snakeY[i] = snakeY[i-1];
         }
