@@ -42,6 +42,8 @@ public class SnakeGame extends JPanel{
             if(running){
                 update();
                 foodGen();
+                foodEater();
+                colisionCheck();
             }}};
 
     SnakeGame(int WIDTH,int HEIGHT, int SIZE){
@@ -105,8 +107,21 @@ public class SnakeGame extends JPanel{
         return false;
     }
 
+    private void foodEater(){
+        for(int i = 0;i < foods_in_game;i++){
+            if((foodX[i] * SIZE) == snakeX[0] && (foodY[i] * SIZE) == snakeY[0]){
+                do{
+                    x = rand.nextInt(WIDTH);
+                    y = rand.nextInt(HEIGHT);
+                }while(isntAv(x,y));
+                foodX[i] = x;
+                foodY[i] = y;
+                snakeLenght++;
+            }
+        }
+    }
 
-
+    private void colisionCheck(){}
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
