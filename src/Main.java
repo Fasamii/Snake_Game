@@ -2,8 +2,8 @@ import javax.swing.JFrame;
 
 public class Main{
 
-    private static int SCREEN_WIDTH = 20;
-    private static int SCREEN_HEIGHT = 15;
+    private static int SCREEN_WIDTH = 15;
+    private static int SCREEN_HEIGHT = 10;
     private static int SIZE = 50; // min 10
 
     static JFrame f = new JFrame();
@@ -16,8 +16,8 @@ public class Main{
         f.setResizable(false);
         
         SnakeGame game = new SnakeGame(SCREEN_WIDTH, SCREEN_HEIGHT, SIZE);
-
         f.add(game);
+    
         f.setVisible(true);
     }
 }

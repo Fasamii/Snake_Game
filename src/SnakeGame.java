@@ -1,6 +1,5 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
@@ -8,12 +7,13 @@ import java.util.TimerTask;
 import java.awt.Color;
 import javax.swing.JPanel;
 
-public class SnakeGame extends JPanel implements KeyListener{
+public class SnakeGame extends JPanel{
     
         private int WIDTH;
         private int HEIGHT;
         private int SIZE;
         private int DELAY = 230;
+        private int FOODS = 5;
         private final Color[] COLOR = {
             new Color(0x301045),
             new Color(0x00B050),
@@ -26,20 +26,38 @@ public class SnakeGame extends JPanel implements KeyListener{
         private int[] snakeX;
         private int[] snakeY;
         private int snakeLenght = 3;
+        private int foods_in_game = 0;
+        private int[] foodX = new int[FOODS];
+        private int[] foodY = new int[FOODS];    
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+            if(running){
                 update();
-            }
-        };
+                foodGen();
+            }}};
 
     SnakeGame(int WIDTH,int HEIGHT, int SIZE){
         this.WIDTH=WIDTH;this.HEIGHT=HEIGHT;this.SIZE=SIZE;
         this.setPreferredSize(new Dimension((this.WIDTH * this.SIZE)+5,(this.HEIGHT * this.SIZE)+32));
         this.setBackground(COLOR[0]);
-        addKeyListener(this);
+        Main.f.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e){}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyChar()) {
+                    case 'w':if(lastChar != 's'){lastChar = 'w';}break;
+                    case 's':if(lastChar != 'w'){lastChar = 's';}break;
+                    case 'a':if(lastChar != 'd'){lastChar = 'a';}break;
+                    case 'd':if(lastChar != 'a'){lastChar = 'd';}break;
+                    default:break;
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e){}});
         snakeX= new int[WIDTH*HEIGHT];
         snakeY= new int[WIDTH*HEIGHT];
         this.snakeX[0] = SIZE;this.snakeY[0] = SIZE;
@@ -47,7 +65,7 @@ public class SnakeGame extends JPanel implements KeyListener{
     }
 
     private void update(){
-        for(int i = snakeX.length - 1;i > 0;i--){
+        for(int i = snakeLenght - 1;i > 0;i--){
             snakeX[i] = snakeX[i-1];
             snakeY[i] = snakeY[i-1];
         }
@@ -60,6 +78,18 @@ public class SnakeGame extends JPanel implements KeyListener{
         }
         Main.f.repaint();
     }
+
+    private void foodGen(){
+        while(this.foods_in_game < this.FOODS){
+            System.out.println("new fo");
+            foods_in_game++;
+        }
+    }
+
+
+
+
+
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -77,21 +107,5 @@ public class SnakeGame extends JPanel implements KeyListener{
         //food
         g.setColor(COLOR[3]);
         g.fillRect(SIZE*4+4,SIZE*3+4,SIZE-7,SIZE-7);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-       
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println("pressed");
-        lastChar = e.getKeyChar();
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-     
     }
 }
