@@ -15,7 +15,7 @@ public class SnakeGame extends JPanel{
         private int HEIGHT;
         private int SIZE;
         private int DELAY = 230;
-        private int FOODS = 5;
+        private int FOODS = 1000;
         private final Color[] COLOR = {
             new Color(0x301045),
             new Color(0x00B050),
@@ -36,6 +36,8 @@ public class SnakeGame extends JPanel{
         private int[] foodY = new int[FOODS];
         private int x;
         private int y;
+
+        private boolean gene = true;
 
         int eve;
         
@@ -94,6 +96,7 @@ public class SnakeGame extends JPanel{
     }
 
     private void foodGen(){
+        if(gene){
         while(this.foods_in_game < this.FOODS){
             do{
                 x = rand.nextInt(WIDTH);
@@ -103,6 +106,8 @@ public class SnakeGame extends JPanel{
             foodY[foods_in_game] = y;
             foods_in_game++;
         }
+        gene = false;
+    }
     }
 
     private boolean isntAv(int x,int y){
@@ -122,12 +127,8 @@ public class SnakeGame extends JPanel{
     private void foodEater(){
         for(int i = 0;i < foods_in_game;i++){
             if((foodX[i] * SIZE) == snakeX[0] && (foodY[i] * SIZE) == snakeY[0]){
-                do{
-                    x = rand.nextInt(WIDTH);
-                    y = rand.nextInt(HEIGHT);
-                }while(isntAv(x,y));
-                foodX[i] = x;
-                foodY[i] = y;
+                foodX[i] = -1;
+                foodY[i] = -1;
                 snakeLenght++;
             }
         }
@@ -176,12 +177,12 @@ public class SnakeGame extends JPanel{
         }
         if(!running && !win){
             Font currentFont = g.getFont();
-            Font newFont = currentFont.deriveFont(currentFont.getSize() * (4.4F*(SIZE / 50)));
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * (4.4F*(SIZE / 45)));
             g.setFont(newFont);
             g.setColor(COLOR[4]);g.drawString("GAME OVER (enter to reset)", WIDTH*SIZE / 15, HEIGHT*SIZE / 2);}
         if(win){
             Font currentFont = g.getFont();
-            Font newFont = currentFont.deriveFont(currentFont.getSize() * (4.4F * (SIZE / 50)));
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * (4.4F * (SIZE / 45)));
             g.setFont(newFont);
             g.setColor(COLOR[5]);g.drawString("WIN (enter to reset)", WIDTH*SIZE / 15, HEIGHT*SIZE / 2);}
     }
